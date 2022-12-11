@@ -1,24 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ChangeEvent } from "react";
+
+const fr = new FileReader();
 
 function App() {
+
+  fr.addEventListener('loadend', handleEvent);
+
+  function handleEvent(e:ProgressEvent) {
+    console.log(e);
+  }
+
+  function handleSubmit(e:ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    if (e.target.files === null) {
+      return;
+    }
+    fr.readAsArrayBuffer(e.target.files[0]);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>jausers</h1>
+        <input id="picture-to-submit" type="file" onChange={handleSubmit}/>
     </div>
   );
 }
