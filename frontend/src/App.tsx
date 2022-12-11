@@ -1,21 +1,17 @@
 import { ChangeEvent } from "react";
-
-const fr = new FileReader();
+import fileService from "./services/fileService";
 
 function App() {
-
-  fr.addEventListener('loadend', handleEvent);
-
-  function handleEvent(e:ProgressEvent) {
-    console.log(e);
-  }
 
   function handleSubmit(e:ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     if (e.target.files === null) {
       return;
     }
-    fr.readAsArrayBuffer(e.target.files[0]);
+    const imgFormData = new FormData();
+    imgFormData.append("image", e.target.files[0]);
+
+    fileService.postImg(imgFormData);
   }
 
   return (
