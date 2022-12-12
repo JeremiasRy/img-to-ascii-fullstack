@@ -7,4 +7,8 @@ const postImg = async (data:FormData) => {
     console.log(result);
 } 
 
-export default { postImg };
+const fileService = {
+    postImg
+}
+
+export default fileService;

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "backend", "backend.csproj", "{97121D4F-87E4-4242-AEA7-ACA2EBC4CA09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImgToASCII", "..\ImgToASCIII\ImgToASCII.csproj", "{784B79A4-08DE-4C33-A98C-FC3E1D3C1EB7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{97121D4F-87E4-4242-AEA7-ACA2EBC4CA09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97121D4F-87E4-4242-AEA7-ACA2EBC4CA09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97121D4F-87E4-4242-AEA7-ACA2EBC4CA09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97121D4F-87E4-4242-AEA7-ACA2EBC4CA09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{784B79A4-08DE-4C33-A98C-FC3E1D3C1EB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{784B79A4-08DE-4C33-A98C-FC3E1D3C1EB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{784B79A4-08DE-4C33-A98C-FC3E1D3C1EB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{784B79A4-08DE-4C33-A98C-FC3E1D3C1EB7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C7495A58-2A33-4E80-975C-BCC07AF1D8BA}
+	EndGlobalSection
+EndGlobal
