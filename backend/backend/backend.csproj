@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ImgToASCIII\ImgToASCII.csproj" />
     <ProjectReference Include="..\ImgToASCIILibrary\ImgToASCIILibrary.csproj" />
   </ItemGroup>
 

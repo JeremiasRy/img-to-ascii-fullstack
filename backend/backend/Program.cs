@@ -1,4 +1,4 @@
-global using ImgToASCIILibrary;
+global using ImgToASCII;
 using backend;
 
 

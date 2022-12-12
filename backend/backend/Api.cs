@@ -1,5 +1,6 @@
-﻿namespace backend;
-using System.Drawing;
+﻿using System.Runtime.Versioning;
+
+namespace backend;
 
 public static class Api
 {
@@ -7,12 +8,11 @@ public static class Api
     {
         app.MapPost("/img", PostImage);
     }
+    [SupportedOSPlatform("windows")]
     private static async Task<IResult> PostImage(HttpRequest request)
     {
         if (!request.HasFormContentType)
-        {
             return Results.BadRequest();
-        }
 
         var form = await request.ReadFormAsync();
         IFormFile image = form.Files[0];
@@ -21,11 +21,10 @@ public static class Api
             return Results.BadRequest();
 
         await using Stream stream = image.OpenReadStream();
-        StreamReader sr = new (stream);
 
-        Bitmap img = Image.FromStream(stream) as Bitmap;
+        ImgToASCIIConverter converter = new(stream);
+        var asciiImg = await converter.GetAsciiPicture();
 
-        return Results.Ok();
-        
+        return Results.Ok(asciiImg);
     }
 }
