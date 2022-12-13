@@ -1,4 +1,6 @@
-.row {
+#picture {
+    width: 95vw;
+    height: 95vh;
     font-family: 'Courier New', Courier, monospace;
-    letter-spacing: 0.2em; 
+    font-size: xx-small;
 }

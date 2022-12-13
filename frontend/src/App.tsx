@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useRef } from "react";
 import fileService from "./services/fileService";
 import "./App.css";
 
@@ -17,12 +17,19 @@ class Picture {
 function App() {
 
   const [ picture, setPicture ] = useState<Picture>(new Picture(0,0,[]));
+  const element = useRef(null);
 
   async function handleSubmit(e:ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     if (e.target.files === null) {
       return;
     }
+    if (element.current) { // Logic for calculating the output size of the ascii image
+      const styles = getComputedStyle(element.current);
+      console.log(parseInt(styles.width.replace('px', '')) / parseInt(styles.fontSize.replace('px', ''))) // width in characters
+      console.log(parseInt(styles.height.replace('px', '')) / parseInt(styles.fontSize.replace('px', ''))) // height in characters
+    }
+    
     const imgFormData = new FormData();
     imgFormData.append("image", e.target.files[0]);
 
@@ -30,15 +37,12 @@ function App() {
     setPicture(new Picture(imageData.height, imageData.width, imageData.rows))
   }
 
-  if (picture.picture.length !== 0) {
-    console.log(picture.picture[77])
-  }
   return (
     <div className="App">
       <h1>jausers</h1>
         <input id="picture-to-submit" type="file" onChange={handleSubmit}/>
-        <div id="picture">
-          {picture.picture.length !== 0 && picture.picture.map(row => <><span className="row">{row}</span><br/></>)};
+        <div id="picture" ref={element}>
+          {picture.picture.length !== 0 && picture.picture.map(row => <><span className="row">{row}</span><br/></>)}
         </div>
     </div>
   )
