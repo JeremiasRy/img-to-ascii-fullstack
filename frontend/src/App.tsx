@@ -5,12 +5,12 @@ import "./App.css";
 class Picture {
     rows: number;
     columns: number;
-    picture: string[][];
+    picture: string[];
 
     constructor(rows:number, columns:number, picture:string[]) {
       this.rows = rows;
       this.columns = columns;
-      this.picture = picture.map(row => row.replace(/ /g, "\u00A0").split(""));
+      this.picture = picture.map(row => row.replace(/ /g, "\u00A0"));
     }
 }
 
@@ -38,7 +38,7 @@ function App() {
       <h1>jausers</h1>
         <input id="picture-to-submit" type="file" onChange={handleSubmit}/>
         <div id="picture">
-          {picture.picture.length !== 0 && picture.picture.map(row => <div className="row">{row.map(char => <div className="character">{char}</div>)}</div>)};
+          {picture.picture.length !== 0 && picture.picture.map(row => <><span className="row">{row}</span><br/></>)};
         </div>
     </div>
   )
