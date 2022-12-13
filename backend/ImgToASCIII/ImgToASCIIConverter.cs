@@ -11,8 +11,7 @@ public class ImgToASCIIConverter
     readonly string _grayScale = "@%#*+=-:. ";
     readonly float _grayScaleMultiplier;
     readonly int _intervalToRemoveRow = 3;
-
-    List<string> _rows = new();
+    readonly List<string> _rows = new();
 
     [SupportedOSPlatform("windows")]
     void Rows()
@@ -35,9 +34,9 @@ public class ImgToASCIIConverter
                     Color previousRowPixel = _image.GetPixel(iX, iY - 1);
                     float previousPixelGrayScale = (previousRowPixel.R + previousRowPixel.G + previousRowPixel.B) / 3;
                     pixelGrayScale = (pixelGrayScale + previousPixelGrayScale) / 2;
+                    applyGreynessFromPreviousRow = false;
                 }
-                row += _grayScale.ElementAt((int)Math.Round(_grayScaleMultiplier * pixelGrayScale));
-                applyGreynessFromPreviousRow = false;
+                row += _grayScale.ElementAt((int)Math.Round(_grayScaleMultiplier * pixelGrayScale));   
             }
             _rows.Add(row);
         }
