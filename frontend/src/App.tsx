@@ -1,18 +1,8 @@
 import { useState, ChangeEvent, useRef } from "react";
 import fileService from "./services/fileService";
 import "./App.css";
-
-class Picture {
-    rows: number;
-    columns: number;
-    picture: string[];
-
-    constructor(rows:number, columns:number, picture:string[]) {
-      this.rows = rows;
-      this.columns = columns;
-      this.picture = picture.map(row => row.replace(/ /g, "\u00A0"));
-    }
-}
+import Picture from "./types/Picture";
+import IPostBody from "./types/IPostBody";
 
 function App() {
 
@@ -24,17 +14,21 @@ function App() {
     if (e.target.files === null) {
       return;
     }
-    if (element.current) { // Logic for calculating the output size of the ascii image
-      const styles = getComputedStyle(element.current);
-      console.log(parseInt(styles.width.replace('px', '')) / parseInt(styles.fontSize.replace('px', ''))) // width in characters
-      console.log(parseInt(styles.height.replace('px', '')) / parseInt(styles.fontSize.replace('px', ''))) // height in characters
-    }
-    
-    const imgFormData = new FormData();
-    imgFormData.append("image", e.target.files[0]);
 
-    let imageData = await fileService.postImg(imgFormData);
-    setPicture(new Picture(imageData.height, imageData.width, imageData.rows))
+    if (element.current) { 
+      const styles = getComputedStyle(element.current);
+      const imgFormData = new FormData();
+      imgFormData.append("image", e.target.files[0]);
+      
+      const body: IPostBody = {
+        width: Math.floor(parseInt(styles.width.replace('px', '')) / parseInt(styles.fontSize.replace('px', ''))),
+        height: Math.floor(parseInt(styles.height.replace('px', '')) / parseInt(styles.fontSize.replace('px', ''))),
+        imageFile: imgFormData,
+      }
+
+      let imageData = await fileService.postImg(body);
+      setPicture(new Picture(imageData.height, imageData.width, imageData.rows))
+    }  
   }
 
   return (
