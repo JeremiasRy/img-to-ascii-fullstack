@@ -17,6 +17,7 @@ function App() {
     if (element.current) { 
       const styles = getComputedStyle(element.current);
       const imgFormData = new FormData();
+
       imgFormData.append("image", e.target.files[0]);
       imgFormData.append("width", String(Math.floor(parseInt(styles.width.replace('px', '')) / parseInt(styles.fontSize.replace('px', '')))));
       imgFormData.append("height", String(Math.floor(parseInt(styles.height.replace('px', '')) / parseInt(styles.fontSize.replace('px', '')))))

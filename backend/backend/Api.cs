@@ -21,8 +21,8 @@ public static class Api
             return Results.BadRequest();
 
         await using Stream stream = image.OpenReadStream();
-
-        ImgToASCIIConverter converter = new(stream);
+        
+        ImgToASCIIConverter converter = new(stream, int.Parse(form["width"]), int.Parse(form["height"]));
         var asciiImg = await converter.GetAsciiPicture();
 
         return Results.Ok(asciiImg);
