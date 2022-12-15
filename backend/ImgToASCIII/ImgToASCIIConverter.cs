@@ -49,6 +49,10 @@ public class ImgToASCIIConverter
     {
         float scaleToApplyWidth = _expectedWidth / _originalWidth;
         float scaleToApplyHeight = _expectedHeight / _rows.Count;
+        if (scaleToApplyWidth > 1 || scaleToApplyHeight > 1)
+        {
+            return Task.CompletedTask;
+        }
         int pixelSizeWidth = (int)Math.Floor(1 / scaleToApplyWidth);
         int pixelSizeHeigth = (int)Math.Floor(1 / scaleToApplyHeight);
         int newWidth;
