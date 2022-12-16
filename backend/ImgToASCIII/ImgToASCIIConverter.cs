@@ -8,12 +8,15 @@ public class ImgToASCIIConverter
     readonly Bitmap _image;
     readonly float _originalHeight;
     readonly float _originalWidth;
-    readonly float _expectedHeight;
-    readonly float _expectedWidth;
+    readonly float _maxOutputHeight;
+    readonly float _maxOutputWidth;
     readonly string _grayScale = "@%#*+=-:. ";
     readonly float _grayScaleMultiplier;
     readonly int _intervalToRemoveRow = 3;
+    float _imageRatioWidthToHeight;
+    float _imageRatioHeightToWidth;
     List<string> _rows = new();
+
 
     [SupportedOSPlatform("windows")]
     Task Rows()
@@ -42,21 +45,41 @@ public class ImgToASCIIConverter
             }
             _rows.Add(row);
         }
+        _imageRatioWidthToHeight = _originalWidth / _rows.Count;
+        _imageRatioHeightToWidth = _rows.Count / _originalWidth;
         return Task.CompletedTask;
     }
 
     Task FormatRows()
     {
-        float scaleToApplyWidth = _expectedWidth / _originalWidth;
-        float scaleToApplyHeight = _expectedHeight / _rows.Count;
+
+        float scaleToApplyWidth = _maxOutputWidth / _originalWidth;
+        float scaleToApplyHeight = _maxOutputHeight / _rows.Count;
         if (scaleToApplyWidth > 1 || scaleToApplyHeight > 1)
         {
             return Task.CompletedTask;
         }
-        int pixelSizeWidth = (int)Math.Floor(1 / scaleToApplyWidth);
-        int pixelSizeHeigth = (int)Math.Floor(1 / scaleToApplyHeight);
-        int newWidth;
-        int newHeight = _rows.Count / pixelSizeHeigth;
+        float newWidth = 0;
+        float newHeight = 0;
+        if (scaleToApplyWidth < scaleToApplyHeight)
+        {
+            newWidth = _maxOutputWidth;
+        } else
+        {
+            newHeight = _maxOutputHeight;
+        }
+        
+        if (newWidth == 0)
+        {
+            newWidth = (float)Math.Floor(newHeight * _imageRatioWidthToHeight);
+        } else if (newHeight == 0)
+        {
+            newHeight = (float)Math.Floor(newWidth * _imageRatioHeightToWidth);
+        }
+        
+        int pixelSizeWidth = (int)Math.Round(_originalWidth / newWidth);
+        int pixelSizeHeigth = (int)Math.Round(_rows.Count / newHeight);
+        
 
         List<string> adjustedRows = new();
         List<string> adjustedPicture = new();
@@ -65,7 +88,7 @@ public class ImgToASCIIConverter
             adjustedPicture.Add("");
         }
 
-        for (int i = 0; i < _rows.Count; i++) //Adjust columns
+        for (int i = 0; i < _rows.Count; i++) //Adjust rows
         {
             string compiledRow = "";
             var chars = SplitIntoChunks(_rows[i], pixelSizeWidth).Select(str => AdjustedChar(str));
@@ -73,11 +96,11 @@ public class ImgToASCIIConverter
             {
                 compiledRow += ch;
             };
+            var length = compiledRow.Length;
             adjustedRows.Add(compiledRow);
         };
-        newWidth = adjustedRows.First().Length;
 
-        for (int i = 0; i < newWidth; i++) //Adjust rows
+        for (int i = 0; i < adjustedRows.First().Length; i++) //Adjust columns
         {
             string rowString = "";
             foreach (var row in adjustedRows)
@@ -128,8 +151,8 @@ public class ImgToASCIIConverter
         _image = bitmap;
         _originalHeight = _image.Height;
         _originalWidth = _image.Width;
-        _expectedHeight = expectedHeight;
-        _expectedWidth = expectedWidth;
+        _maxOutputHeight = expectedHeight;
+        _maxOutputWidth = expectedWidth;
 
         _grayScaleMultiplier = (_grayScale.Length - 1) / (float)255;
     }
