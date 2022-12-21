@@ -11,9 +11,14 @@
 .fit-picture {
     height:fit-content;
     width: fit-content;
-    
 }
 p {
     display: inline-block;
     margin: 0;
+}
+.App {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
