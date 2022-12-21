@@ -1,12 +1,26 @@
 #picture {
+    background-color: white;
+    color:black;
     font-family: 'Courier New', Courier, monospace;
     font-size: xx-small;
     border: 1px solid black;
-    box-shadow: 0 0 1px 1px;
+    box-shadow: 0 0 2px 2px black;
 }
 .max-size {
     width: 95vw;
     height: 95vh;
+}
+.submit-button {
+    height: 3em;
+    width: 10vw;
+    background-color: gainsboro;
+    border: none;
+    border-radius: 1.5em;
+}
+.submit-button:hover {
+    cursor: pointer;
+    border: 1px solid black;
+    box-shadow: 0 0 1px 1px black;
 }
 .fit-picture {
     height:fit-content;
@@ -27,4 +41,8 @@ p {
     justify-content: center;
     align-items: center;
     row-gap: 10px;
+}
+body {
+    background-color: grey;
+    color: ghostwhite;
 }

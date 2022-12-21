@@ -12,12 +12,12 @@ function App() {
   const [ picture, setPicture ] = useState<Picture | null>(null);
   const [ file, setFile ] = useState<Blob | null>(null);
   const [ divClassName, setDivClassName ] = useState<"max-size" | "fit-picture">("max-size")
-  const [ outputElement, setOutputElement ] = useState<IOutputelement>({width: 0, height: 0})
+  const [ outputElement, setOutputElement ] = useState<IOutputelement | undefined>(undefined)
   const element = useRef(null);
 
   
   useEffect(() => {
-    if (element.current !== null) {
+    if (element.current !== null && outputElement === undefined) {
       let styles:CSSStyleDeclaration;
       styles = getComputedStyle(element.current);
       let outputElement:IOutputelement = {
@@ -28,11 +28,10 @@ function App() {
     }
   }, []) ;
   
-
   async function handleSubmit(e:SyntheticEvent) {
     e.preventDefault();
 
-    if (element.current !== null && file !== null) { 
+    if (element.current !== null && file !== null && outputElement !== undefined) { 
       const imgFormData = new FormData();
       imgFormData.append("image", file);
       imgFormData.append("width", String(outputElement.width));
@@ -46,7 +45,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Turn your pictures to ASCII!!</h1>
+      <h1>Img to ASCII art converter</h1>
       <div className="form-wrapper">
         <form className="form" onSubmit={handleSubmit}>
           <input 
@@ -58,7 +57,7 @@ function App() {
               } else {
               //set notifcation element
               }}}/>
-          <input type="submit"/>
+          <input type="submit" className="submit-button"/>
         </form>
       </div>
       <div id="picture" className={divClassName} ref={element}>
