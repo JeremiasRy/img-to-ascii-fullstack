@@ -5,24 +5,36 @@ import Picture from "./types/Picture";
 
 function App() {
 
-  const [ picture, setPicture ] = useState<Picture>(new Picture(0,0,[]));
-  const [ file, setFile ] = useState<Blob | null>(null)
+  const [ picture, setPicture ] = useState<Picture | null>(null);
+  const [ file, setFile ] = useState<Blob | null>(null);
+  const [ divClassName, setDivClassName ] = useState<"max-size" | "fit-picture">("max-size")
   const element = useRef(null);
+
+  let styles:CSSStyleDeclaration;
+  let expectedWidth = "";
+  let expectedHeight = "";
+
+  if (element.current !== null) {
+    styles = getComputedStyle(element.current);
+    expectedHeight = String(Math.floor(parseInt(styles.height.replace('px', '')) / 10));
+    expectedWidth = String(Math.floor(parseInt(styles.width.replace('px', '')) / parseInt(styles.fontSize.replace('px', '')))); 
+  }
 
   async function handleSubmit(e:SyntheticEvent) {
     e.preventDefault();
 
-    if (element.current && file !== null) { 
-      const styles = getComputedStyle(element.current);
+    if (element.current !== null && file !== null) { 
+
       const imgFormData = new FormData();
 
       imgFormData.append("image", file);
-      imgFormData.append("width", String(Math.floor(parseInt(styles.width.replace('px', '')) / parseInt(styles.fontSize.replace('px', '')))));
-      imgFormData.append("height", String(Math.floor(parseInt(styles.height.replace('px', '')) / parseInt(styles.fontSize.replace('px', '')))))
-      
+      imgFormData.append("width", expectedWidth);
+      imgFormData.append("height", expectedHeight)
+      console.log(Math.floor(parseInt(styles.height.replace('px', '')) / 10))
       let imageData = await fileService.postImg(imgFormData);
       setPicture(new Picture(imageData.height, imageData.width, imageData.rows));
       setFile(null);
+      setDivClassName("fit-picture");
     }  
   }
 
@@ -41,8 +53,8 @@ function App() {
             }}}/>
         <input type="submit"/>
       </form>
-      <div id="picture" ref={element}>
-        {picture.picture.length !== 0 && picture.picture.map(row => <><span className="row">{row}</span><br/></>)}
+      <div id="picture" className={divClassName} ref={element}>
+        {picture !== null && picture.picture.map(row => <>{row}<br/></>)}
       </div>
     </div>
   )

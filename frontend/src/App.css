@@ -1,6 +1,19 @@
 #picture {
-    width: 95vw;
-    height: 95vh;
     font-family: 'Courier New', Courier, monospace;
     font-size: xx-small;
+    border: 1px solid black;
+    box-shadow: 0 0 1px 1px;
+}
+.max-size {
+    width: 95vw;
+    height: 95vh;
+}
+.fit-picture {
+    height:fit-content;
+    width: fit-content;
+    
+}
+p {
+    display: inline-block;
+    margin: 0;
 }
