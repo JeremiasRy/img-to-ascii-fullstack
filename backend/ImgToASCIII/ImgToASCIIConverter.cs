@@ -79,7 +79,8 @@ public class ImgToASCIIConverter
         
         int pixelSizeWidth = (int)Math.Round(_originalWidth / newWidth);
         int pixelSizeHeigth = (int)Math.Round(_rows.Count / newHeight);
-        
+        newHeight = (int)_rows.Count / pixelSizeHeigth;
+        newWidth = (int)_originalWidth / pixelSizeWidth;
 
         List<string> adjustedRows = new();
         List<string> adjustedPicture = new();
@@ -100,22 +101,22 @@ public class ImgToASCIIConverter
             adjustedRows.Add(compiledRow);
         };
 
-        for (int i = 0; i < adjustedRows.First().Length; i++) //Adjust columns
+        for (int i = 0; i < newWidth; i++) //Adjust columns
         {
-            string rowString = "";
+            string columnString = "";
             foreach (var row in adjustedRows)
             {
-                rowString += row[i];
+                columnString += row[i];
             }
-            var chars = SplitIntoChunks(rowString, pixelSizeHeigth).Select(str => AdjustedChar(str));
-            string formattedRow = "";
+            var chars = SplitIntoChunks(columnString, pixelSizeHeigth).Select(str => AdjustedChar(str));
+            string formattedColumn = "";
             foreach(char ch in chars)
             {
-                formattedRow += ch;
+                formattedColumn += ch;
             }
-            for (int j = 0; j < formattedRow.Length; j++)
+            for (int j = 0; j < newHeight; j++)
             {
-                adjustedPicture[j] += formattedRow.ElementAt(j);
+                adjustedPicture[j] += formattedColumn.ElementAt(j);
             }
         }
         _rows = adjustedPicture;
