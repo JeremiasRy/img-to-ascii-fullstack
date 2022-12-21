@@ -34,7 +34,6 @@ function App() {
 
     if (element.current !== null && file !== null) { 
       const imgFormData = new FormData();
-
       imgFormData.append("image", file);
       imgFormData.append("width", String(outputElement.width));
       imgFormData.append("height", String(outputElement.height))
@@ -47,19 +46,21 @@ function App() {
 
   return (
     <div className="App">
-      <h1>jausers</h1>
-      <form onSubmit={handleSubmit}>
-        <input 
-          id="picture-to-submit" 
-          type="file" 
-          onChange={(e) => {
-            if (e.target.files !== null) {
-              setFile(e.target.files[0] as Blob)
-            } else {
+      <h1>Turn your pictures to ASCII!!</h1>
+      <div className="form-wrapper">
+        <form className="form" onSubmit={handleSubmit}>
+          <input 
+            id="picture-to-submit" 
+            type="file" 
+            onChange={(e) => {
+              if (e.target.files !== null) {
+                setFile(e.target.files[0] as Blob)
+              } else {
               //set notifcation element
-            }}}/>
-        <input type="submit"/>
-      </form>
+              }}}/>
+          <input type="submit"/>
+        </form>
+      </div>
       <div id="picture" className={divClassName} ref={element}>
         {picture !== null && picture.picture.map(row => <>{row}<br/></>)}
       </div>

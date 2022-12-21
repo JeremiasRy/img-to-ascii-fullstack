@@ -16,9 +16,15 @@ p {
     display: inline-block;
     margin: 0;
 }
+.form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
 .App {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    row-gap: 10px;
 }
