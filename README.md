@@ -1,4 +1,5 @@
 # Image to ASCII converter fullstack
+![demo picture](https://github.com/JeremiasRy/img-to-ascii-fullstack/blob/main/image/demo.png)
 .jpeg, .jpg, .png to ASCII picture converter
 
 Ui is made with React with typescript, Backend and image conversion with C# and .net <br/> 
