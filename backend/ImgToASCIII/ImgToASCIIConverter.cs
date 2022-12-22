@@ -79,7 +79,7 @@ public class ImgToASCIIConverter
         
         int pixelSizeWidth = (int)Math.Round(_originalWidth / newWidth);
         int pixelSizeHeigth = (int)Math.Round(_rows.Count / newHeight);
-        newHeight = (int)_rows.Count / pixelSizeHeigth;
+        newHeight = (int)_rows.Count / pixelSizeHeigth > _maxOutputHeight ? _maxOutputHeight : (int)_rows.Count / pixelSizeHeigth;
         newWidth = (int)_originalWidth / pixelSizeWidth;
 
         List<string> adjustedRows = new();
