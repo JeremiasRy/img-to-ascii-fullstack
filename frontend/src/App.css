@@ -8,7 +8,7 @@
 }
 .max-size {
     width: 95vw;
-    height: 95vh;
+    height: 90vh;
 }
 .submit-button {
     height: 3em;
@@ -45,4 +45,7 @@ p {
 body {
     background-color: grey;
     color: ghostwhite;
+}
+h1 {
+    margin: 0;
 }
