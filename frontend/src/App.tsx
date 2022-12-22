@@ -11,8 +11,10 @@ function App() {
 
   const [ picture, setPicture ] = useState<Picture | null>(null);
   const [ file, setFile ] = useState<Blob | null>(null);
-  const [ divClassName, setDivClassName ] = useState<"max-size" | "fit-picture">("max-size")
-  const [ outputElement, setOutputElement ] = useState<IOutputelement | undefined>(undefined)
+  const [ divClassName, setDivClassName ] = useState<"max-size" | "fit-picture">("max-size");
+  const [ outputElement, setOutputElement ] = useState<IOutputelement | undefined>(undefined);
+  const [ fromUrl, setFromUrl ] = useState<boolean>(false);
+  const [ url, setUrl ] = useState<string>("");
   const element = useRef(null);
 
   
@@ -26,11 +28,14 @@ function App() {
       }
       setOutputElement(outputElement);
     }
-  }, []) ;
+  }, [outputElement]) ;
   
   async function handleSubmit(e:SyntheticEvent) {
     e.preventDefault();
-
+    if (fromUrl) {
+      let res = await fetch(url)
+      setFile(await res.blob())
+    }
     if (element.current !== null && file !== null && outputElement !== undefined) { 
       const imgFormData = new FormData();
       imgFormData.append("image", file);
@@ -48,7 +53,14 @@ function App() {
       <h1>Img to ASCII art converter</h1>
       <div className="form-wrapper">
         <form className="form" onSubmit={handleSubmit}>
-          <input 
+          <button onClick={() => setFromUrl(!fromUrl)}>{fromUrl ? "From your computer" : "From url"}</button>
+          {fromUrl 
+            ? <input 
+            type="url" 
+            id="pic-url"
+            placeholder="Put direct url to the picture"
+            onChange={(e) => setUrl(e.currentTarget.value)}/>
+            : <input 
             id="picture-to-submit" 
             type="file" 
             onChange={(e) => {
@@ -57,6 +69,8 @@ function App() {
               } else {
               //set notifcation element
               }}}/>
+          }
+          
           <input type="submit" className="submit-button"/>
         </form>
       </div>

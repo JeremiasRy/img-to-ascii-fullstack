@@ -12,7 +12,6 @@
 }
 .submit-button {
     height: 3em;
-    width: 10vw;
     background-color: gainsboro;
     border: none;
     border-radius: 1.5em;
@@ -34,6 +33,7 @@ p {
     display: flex;
     flex-direction: column;
     row-gap: 5px;
+    width: 15vw;
 }
 .App {
     display: flex;
